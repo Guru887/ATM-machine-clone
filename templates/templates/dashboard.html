@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ATM Dashboard</title>
+</head>
+<body>
+    <h2>Welcome {{ user.name }}</h2>
+    <p>Your Accounts:</p>
+    <ul>
+        {% for acc in user.accounts.values() %}
+        <li>Account {{ acc.account_number }} - Balance: ₹{{ acc.balance }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+
+    <h3>Deposit</h3>
+    <form method="POST" action="{{ url_for('deposit') }}">
+        <input type="number" name="amount" step="0.01" required>
+        <button type="submit">Deposit</button>
+    </form>
+
+    <h3>Withdraw</h3>
+    <form method="POST" action="{{ url_for('withdraw') }}">
+        <input type="number" name="amount" step="0.01" required>
+        <button type="submit">Withdraw</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
