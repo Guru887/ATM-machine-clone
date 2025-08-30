@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ATM Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-light">
+
+    <div class="container py-5">
+        <div class="card shadow-lg p-4 bg-secondary" style="border-radius: 15px;">
+            <h2 class="text-warning text-center">💰 Welcome, {{ user.name }}</h2>
+            <p class="text-center">Here are your account details:</p>
+
+            <ul class="list-group mb-4">
+                {% for acc_num, account in user.accounts.items() %}
+                    <li class="list-group-item bg-dark text-light d-flex justify-content-between">
+                        <strong>Account {{ acc_num }}</strong>
+                        <span>Balance: ₹{{ account.balance }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Deposit</h4>
+                    <form method="POST" action="/deposit">
+                        <input type="number" step="0.01" name="amount" class="form-control mb-2" placeholder="Enter amount" required>
+                        <button type="submit" class="btn btn-success w-100">Deposit</button>
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>Withdraw</h4>
+                    <form method="POST" action="/withdraw">
+                        <input type="number" step="0.01" name="amount" class="form-control mb-2" placeholder="Enter amount" required>
+                        <button type="submit" class="btn btn-danger w-100">Withdraw</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr class="bg-light">
+
+            <h3 class="text-center text-info">📜 Transaction History</h3>
+            <table class="table table-dark table-striped table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Balance After</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for acc_num, account in user.accounts.items() %}
+                        {% for t in account.get_history() %}
+                            <tr>
+                                <td>{{ t[0] }}</td>
+                                <td>{{ t[1] }}</td>
+                                <td>₹{{ t[2] }}</td>
+                                <td>₹{{ t[3] }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="text-center mt-3">
+                <a href="/logout" class="btn btn-outline-light">Logout</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

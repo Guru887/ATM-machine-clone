@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ATM Login</title>
+    <title>ATM Machine Clone</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>ATM Login</h2>
-    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
-    <form method="post">
-        <label>Name:</label>
-        <input type="text" name="name" required>
-        <label>PIN:</label>
-        <input type="password" name="pin" required>
-        <button type="submit">Login</button>
-    </form>
+<body class="bg-dark text-light d-flex align-items-center justify-content-center vh-100">
+
+    <div class="card shadow-lg p-4 bg-secondary text-center" style="width: 400px; border-radius: 15px;">
+        <h2 class="mb-3 text-warning">💳 ATM Machine Clone</h2>
+        <p class="text-light">Login to access your account</p>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/login">
+            <div class="mb-3">
+                <label class="form-label">PIN:</label>
+                <input type="password" name="pin" class="form-control text-center" required>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Login</button>
+        </form>
+
+        <hr class="bg-light">
+        <p class="mt-2">Don’t have an account? <a href="/register" class="text-info">Create one</a></p>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
