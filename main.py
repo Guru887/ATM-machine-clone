@@ -1,5 +1,4 @@
 # main.py
-# main.py
 from bank_account import BankAccount
 from user import User
 from atm import ATM
